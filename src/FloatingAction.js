@@ -41,7 +41,7 @@ class FloatingAction extends Component {
     this.mainBottomAnimation = new Animated.Value(
       props.distanceToEdge + props.mainVerticalDistance
     );
-    this.actionsBottomAnimation = new Animated.Value(
+    this.actionsTopAnimation = new Animated.Value(
       ACTION_BUTTON_SIZE +
         props.distanceToEdge +
         props.actionsPaddingTopBottom +
@@ -113,7 +113,7 @@ class FloatingAction extends Component {
     const { height } = e.endCoordinates;
 
     Animated.parallel([
-      Animated.spring(this.actionsBottomAnimation, {
+      Animated.spring(this.actionsTopAnimation, {
         bounciness: 0,
         toValue:
           ACTION_BUTTON_SIZE +
@@ -135,7 +135,7 @@ class FloatingAction extends Component {
     const { distanceToEdge, actionsPaddingTopBottom } = this.props;
 
     Animated.parallel([
-      Animated.spring(this.actionsBottomAnimation, {
+      Animated.spring(this.actionsTopAnimation, {
         bounciness: 0,
         toValue: ACTION_BUTTON_SIZE + distanceToEdge + actionsPaddingTopBottom,
         duration: 250
@@ -389,7 +389,7 @@ class FloatingAction extends Component {
     const Touchable = getTouchableComponent();
     const propStyles = {
       backgroundColor: mainButtonColor,
-      bottom: this.mainBottomAnimation // I need to imporove this to run on native thread and not on JS thread
+      top: this.mainBottomAnimation // I need to imporove this to run on native thread and not on JS thread
     };
 
     if (["left", "right"].indexOf(position) > -1) {
@@ -461,7 +461,7 @@ class FloatingAction extends Component {
       styles[`${position}Actions`],
       animatedActionsStyle,
       {
-        bottom: this.actionsBottomAnimation
+        top: this.actionsTopAnimation
       }
     ];
 
@@ -596,7 +596,7 @@ FloatingAction.defaultProps = {
 const styles = StyleSheet.create({
   actions: {
     position: "absolute",
-    bottom: 85,
+    top: 85,
     zIndex: 10
   },
   rightActions: {

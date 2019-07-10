@@ -31,7 +31,6 @@ class FloatingActionItem extends Component {
       // @deprecated in favor of textElevation
       elevation, // eslint-disable-line
       text,
-      actionBackground,
       position,
       textElevation,
       textBackground,
@@ -99,7 +98,7 @@ class FloatingActionItem extends Component {
     return (
       <View
         key="button"
-        style={[styles.button, { backgroundColor: actionBackground }, shadow]}
+        style={[styles.button, { backgroundColor: color }, shadow]}
       >
         {React.isValidElement(icon) ? (
           icon

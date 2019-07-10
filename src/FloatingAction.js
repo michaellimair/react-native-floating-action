@@ -50,6 +50,8 @@ class FloatingAction extends Component {
     this.animation = new Animated.Value(0);
     this.actionsAnimation = new Animated.Value(0);
     this.visibleAnimation = new Animated.Value(props.visible ? 0 : 1);
+    this.horizontalMovement = new Animated.Value(0);
+    this.verticalMovement = new Animated.Value(0);
     /*
      * this animation will fix an error on ReactNative (Android) where
      * interpolations with 0 and 1 don't work as expected.
@@ -58,6 +60,12 @@ class FloatingAction extends Component {
   }
 
   componentDidMount() {
+    this.verticalMovement.addListener(({ value }) => {
+      this.verticalPosition = value;
+    });
+    this.horizontalMovement.addListener(({ value }) => {
+      this.horizontalPosition = value;
+    });
     const { openOnMount, listenKeyboard } = this.props;
 
     if (openOnMount) {
@@ -96,6 +104,12 @@ class FloatingAction extends Component {
           Animated.spring(this.fadeAnimation, { toValue: 0 })
         ]).start();
       }
+    }
+    if (nextProps.verticalPosition !== this.verticalPosition) {
+      Animated.spring(this.verticalMovement, { toValue: nextProps.verticalPosition }).start();
+    }
+    if (nextProps.horizontalPosition !== this.horizontalPosition) {
+      Animated.spring(this.horizontalMovement, { toValue: nextProps.horizontalPosition }).start();
     }
   }
 
@@ -517,7 +531,16 @@ class FloatingAction extends Component {
     return (
       <Animated.View
         pointerEvents="box-none"
-        style={[styles.overlay, { backgroundColor: "transparent" }]}
+        style={[
+          styles.overlay,
+          {
+            backgroundColor: "transparent",
+            transform: [{
+              translateX: this.horizontalMovement,
+              translateY: this.verticalMovement
+            }]
+          }
+        ]}
       >
         {active && showBackground && this.renderTappableBackground()}
         {this.renderActions()}
@@ -552,6 +575,8 @@ FloatingAction.propTypes = {
   showBackground: PropTypes.bool,
   openOnMount: PropTypes.bool,
   actionsPaddingTopBottom: PropTypes.number,
+  verticalPosition: PropTypes.number,
+  horizontalPosition: PropTypes.number,
   iconHeight: PropTypes.number,
   iconWidth: PropTypes.number,
   listenKeyboard: PropTypes.bool,

@@ -535,10 +535,10 @@ class FloatingAction extends Component {
           styles.overlay,
           {
             backgroundColor: "transparent",
-            transform: [{
-              translateX: this.horizontalMovement,
-              translateY: this.verticalMovement
-            }]
+            transform: [
+              { translateX: this.horizontalMovement },
+              { translateY: this.verticalMovement }
+            ]
           }
         ]}
       >

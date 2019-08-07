@@ -330,7 +330,8 @@ class FloatingAction extends Component {
       position,
       overrideWithAction,
       distanceToEdge,
-      animated
+      animated,
+      accessibilityLabel,
     } = this.props;
     const { active } = this.state;
 
@@ -419,14 +420,14 @@ class FloatingAction extends Component {
           animatedVisibleView,
           this.getShadow()
         ]}
-        accessible
-        accessibilityLabel="Floating Action Button"
       >
         <Touchable
           {...getRippleProps(mainButtonColor)}
           style={styles.button}
           activeOpacity={0.85}
           onPress={this.animateButton}
+          accessibilityLabel={accessibilityLabel}
+          accessibilityRole={"button"}          
         >
           <Animated.View
             style={[styles.buttonTextContainer, animatedViewStyle]}
@@ -485,7 +486,10 @@ class FloatingAction extends Component {
 
     const sortedActions = actions.sort((a, b) => a.position - b.position);
     return (
-      <Animated.View style={actionsStyles} pointerEvents="box-none">
+      <Animated.View
+        style={actionsStyles}
+        pointerEvents="box-none"
+      >
         {sortedActions.map(action => {
           const textColor = action.textColor || action.actionsTextColor;
           const textBackground =
@@ -551,6 +555,7 @@ class FloatingAction extends Component {
 }
 
 FloatingAction.propTypes = {
+  accessibilityLabel: PropTypes.string,
   actions: PropTypes.arrayOf(
     PropTypes.shape({
       color: PropTypes.string,

@@ -48,8 +48,8 @@ class FloatingAction extends Component {
     this.animation = new Animated.Value(0);
     this.actionsAnimation = new Animated.Value(0);
     this.visibleAnimation = new Animated.Value(props.visible ? 0 : 1);
-    this.horizontalMovement = new Animated.Value(0);
-    this.verticalMovement = new Animated.Value(0);
+    this.horizontalMovement = new Animated.Value(props.horizontalPosition);
+    this.verticalMovement = new Animated.Value(props.verticalPosition);
     /*
      * this animation will fix an error on ReactNative (Android) where
      * interpolations with 0 and 1 don't work as expected.
@@ -615,6 +615,8 @@ FloatingAction.defaultProps = {
   overlayColor: "rgba(68, 68, 68, 0.6)",
   position: "right",
   distanceToEdge: 30,
+  verticalPosition: 30,
+  horizontalPosition: 0,
   openOnMount: false,
   showBackground: true,
   iconHeight: 15,

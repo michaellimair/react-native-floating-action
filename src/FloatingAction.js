@@ -105,11 +105,11 @@ class FloatingAction extends Component {
         ]).start();
       }
     }
-    if (nextProps.verticalPosition !== this.verticalPosition) {
-      Animated.spring(this.verticalMovement, { toValue: nextProps.verticalPosition }).start();
+    if (prevProps.verticalPosition !== this.props.verticalPosition) {
+      Animated.spring(this.verticalMovement, { toValue: this.props.verticalPosition }).start();
     }
-    if (nextProps.horizontalPosition !== this.horizontalPosition) {
-      Animated.spring(this.horizontalMovement, { toValue: nextProps.horizontalPosition }).start();
+    if (prevProps.horizontalPosition !== this.props.horizontalPosition) {
+      Animated.spring(this.horizontalMovement, { toValue: this.props.horizontalPosition }).start();
     }
   }
 

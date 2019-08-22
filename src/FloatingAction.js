@@ -94,22 +94,22 @@ class FloatingAction extends Component {
     if (prevProps.visible !== visible) {
       if (visible) {
         Animated.parallel([
-          Animated.spring(this.visibleAnimation, { toValue: 0 }),
-          Animated.spring(this.fadeAnimation, { toValue: 1 })
+          Animated.spring(this.visibleAnimation, { toValue: 0, useNativeDriver: true }),
+          Animated.spring(this.fadeAnimation, { toValue: 1, useNativeDriver: true })
         ]).start();
       }
       if (!visible) {
         Animated.parallel([
-          Animated.spring(this.visibleAnimation, { toValue: 1 }),
-          Animated.spring(this.fadeAnimation, { toValue: 0 })
+          Animated.spring(this.visibleAnimation, { toValue: 1, useNativeDriver: true }),
+          Animated.spring(this.fadeAnimation, { toValue: 0, useNativeDriver: true })
         ]).start();
       }
     }
     if (prevProps.verticalPosition !== this.props.verticalPosition) {
-      Animated.spring(this.verticalMovement, { toValue: this.props.verticalPosition }).start();
+      Animated.spring(this.verticalMovement, { toValue: this.props.verticalPosition, useNativeDriver: true }).start();
     }
     if (prevProps.horizontalPosition !== this.props.horizontalPosition) {
-      Animated.spring(this.horizontalMovement, { toValue: this.props.horizontalPosition }).start();
+      Animated.spring(this.horizontalMovement, { toValue: this.props.horizontalPosition, useNativeDriver: true }).start();
     }
   }
 

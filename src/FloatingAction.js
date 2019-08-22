@@ -135,12 +135,14 @@ class FloatingAction extends Component {
           actionsPaddingTopBottom +
           height -
           (isIphoneX() ? 40 : 0),
-        duration: 250
+        duration: 250,
+        useNativeDriver: true,
       }),
       Animated.spring(this.mainTopAnimation, {
         bounciness: 0,
         toValue: distanceToEdge + height - (isIphoneX() ? 40 : 0),
-        duration: 250
+        duration: 250,
+        useNativeDriver: true,
       })
     ]).start();
   };
@@ -152,12 +154,14 @@ class FloatingAction extends Component {
       Animated.spring(this.actionsTopAnimation, {
         bounciness: 0,
         toValue: ACTION_BUTTON_SIZE + distanceToEdge + actionsPaddingTopBottom,
-        duration: 250
+        duration: 250,
+        useNativeDriver: true,
       }),
       Animated.spring(this.mainTopAnimation, {
         bounciness: 0,
         toValue: distanceToEdge,
-        duration: 250
+        duration: 250,
+        useNativeDriver: true,
       })
     ]).start();
   };
@@ -404,7 +408,7 @@ class FloatingAction extends Component {
     const Touchable = getTouchableComponent();
     const propStyles = {
       backgroundColor: mainButtonColor,
-      top: this.mainTopAnimation // I need to imporove this to run on native thread and not on JS thread
+      transform: [{translateY: this.mainTopAnimation}]
     };
 
     if (["left", "right"].indexOf(position) > -1) {
@@ -476,7 +480,7 @@ class FloatingAction extends Component {
       styles[`${position}Actions`],
       animatedActionsStyle,
       {
-        top: this.actionsTopAnimation
+        transform: [{translateY: this.actionsTopAnimation}]
       }
     ];
 

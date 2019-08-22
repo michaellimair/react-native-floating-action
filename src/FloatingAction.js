@@ -42,10 +42,8 @@ class FloatingAction extends Component {
       props.distanceToEdge + props.mainVerticalDistance
     );
     this.actionsTopAnimation = new Animated.Value(
-      ACTION_BUTTON_SIZE +
-        props.distanceToEdge +
-        props.actionsPaddingTopBottom +
-        props.mainVerticalDistance
+        -props.distanceToEdge +
+        props.actionsPaddingTopBottom
     );
     this.animation = new Animated.Value(0);
     this.actionsAnimation = new Animated.Value(0);
@@ -122,49 +120,49 @@ class FloatingAction extends Component {
     }
   }
 
-  onKeyboardShow = e => {
-    const { distanceToEdge, actionsPaddingTopBottom } = this.props;
-    const { height } = e.endCoordinates;
+  // onKeyboardShow = e => {
+  //   const { distanceToEdge, actionsPaddingTopBottom } = this.props;
+  //   const { height } = e.endCoordinates;
 
-    Animated.parallel([
-      Animated.spring(this.actionsTopAnimation, {
-        bounciness: 0,
-        toValue:
-          ACTION_BUTTON_SIZE +
-          distanceToEdge +
-          actionsPaddingTopBottom +
-          height -
-          (isIphoneX() ? 40 : 0),
-        duration: 250,
-        useNativeDriver: true,
-      }),
-      Animated.spring(this.mainTopAnimation, {
-        bounciness: 0,
-        toValue: distanceToEdge + height - (isIphoneX() ? 40 : 0),
-        duration: 250,
-        useNativeDriver: true,
-      })
-    ]).start();
-  };
+  //   Animated.parallel([
+  //     Animated.spring(this.actionsTopAnimation, {
+  //       bounciness: 0,
+  //       toValue:
+  //         ACTION_BUTTON_SIZE +
+  //         distanceToEdge +
+  //         actionsPaddingTopBottom +
+  //         height -
+  //         (isIphoneX() ? 40 : 0),
+  //       duration: 250,
+  //       useNativeDriver: true,
+  //     }),
+  //     Animated.spring(this.mainTopAnimation, {
+  //       bounciness: 0,
+  //       toValue: distanceToEdge + height - (isIphoneX() ? 40 : 0),
+  //       duration: 250,
+  //       useNativeDriver: true,
+  //     })
+  //   ]).start();
+  // };
 
-  onKeyboardHideHide = () => {
-    const { distanceToEdge, actionsPaddingTopBottom } = this.props;
+  // onKeyboardHideHide = () => {
+  //   const { distanceToEdge, actionsPaddingTopBottom } = this.props;
 
-    Animated.parallel([
-      Animated.spring(this.actionsTopAnimation, {
-        bounciness: 0,
-        toValue: ACTION_BUTTON_SIZE + distanceToEdge + actionsPaddingTopBottom,
-        duration: 250,
-        useNativeDriver: true,
-      }),
-      Animated.spring(this.mainTopAnimation, {
-        bounciness: 0,
-        toValue: distanceToEdge,
-        duration: 250,
-        useNativeDriver: true,
-      })
-    ]).start();
-  };
+  //   Animated.parallel([
+  //     Animated.spring(this.actionsTopAnimation, {
+  //       bounciness: 0,
+  //       toValue: ACTION_BUTTON_SIZE + distanceToEdge + actionsPaddingTopBottom,
+  //       duration: 250,
+  //       useNativeDriver: true,
+  //     }),
+  //     Animated.spring(this.mainTopAnimation, {
+  //       bounciness: 0,
+  //       toValue: distanceToEdge,
+  //       duration: 250,
+  //       useNativeDriver: true,
+  //     })
+  //   ]).start();
+  // };
 
   getShadow = () => {
     const { shadow } = this.props;
@@ -216,8 +214,8 @@ class FloatingAction extends Component {
     const { animated, onClose } = this.props;
 
     if (animated) {
-      Animated.spring(this.animation, { toValue: 0 }).start();
-      Animated.spring(this.actionsAnimation, { toValue: 0 }).start();
+      Animated.spring(this.animation, { toValue: 0, useNativeDriver: true }).start();
+      Animated.spring(this.actionsAnimation, { toValue: 0, useNativeDriver: true }).start();
     }
     this.updateState(
       {
@@ -260,12 +258,12 @@ class FloatingAction extends Component {
     if (!active) {
       if (!floatingIcon) {
         if (animated) {
-          Animated.spring(this.animation, { toValue: 1 }).start();
+          Animated.spring(this.animation, { toValue: 1, useNativeDriver: true }).start();
         }
       }
 
       if (animated) {
-        Animated.spring(this.actionsAnimation, { toValue: 1 }).start();
+        Animated.spring(this.actionsAnimation, { toValue: 1, useNativeDriver: true }).start();
 
         // only execute it for the background to prevent extra calls
         LayoutAnimation.configureNext({

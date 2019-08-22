@@ -15,7 +15,8 @@ class FloatingActionItem extends Component {
 
     if (prevProps.active !== active && animated) {
       Animated.spring(this.animation, {
-        toValue: active ? 1 : 0
+        toValue: active ? 1 : 0,
+        useNativeDriver: true
       }).start();
     }
   }
@@ -126,13 +127,13 @@ class FloatingActionItem extends Component {
 
     if (animated) {
       animatedActionContainerStyle = {
-        marginBottom: this.animation.interpolate({
+        transform: [{translateY: this.animation.interpolate({
           inputRange: [0, 1],
           outputRange: [5, 10]
-        })
+        })}]
       };
     } else {
-      animatedActionContainerStyle = { marginBottom: 10 };
+      animatedActionContainerStyle = { transform: [{translateY: 10}] };
     }
 
     const components = [];
@@ -173,8 +174,10 @@ class FloatingActionItem extends Component {
             styles[`${position}ActionContainer`],
             distanceToEdgeActionContainer,
             {
+              marginTop: 0,
+              marginBottom: 0,
               paddingTop: paddingTopBottom,
-              paddingBottom: paddingTopBottom
+              paddingBottom: paddingTopBottom,
             }
           ]}
         >
